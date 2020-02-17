@@ -75,37 +75,45 @@ namespace BandAPI.Service
 
         public IEnumerable<Album> GetAlbums(Guid bandId)
         {
-            throw new NotImplementedException();
+            if (bandId == Guid.Empty)
+                throw new ArgumentNullException(nameof(bandId));
+            return _context.Albums.Where(a => a.Id == bandId)
+                .OrderBy(a=>a.Title).ToList();
         }
 
         public Band GetBand(Guid bandId)
         {
-            throw new NotImplementedException();
+            if (bandId == Guid.Empty)
+                throw new ArgumentNullException(nameof(bandId));
+            return _context.Bands.FirstOrDefault(b => b.Id == bandId);
         }
 
         public IEnumerable<Band> GetBands()
         {
-            throw new NotImplementedException();
+            return _context.Bands.ToList();
         }
 
-        public IEnumerable<Band> GetBands(IEnumerable<Guid> bandId)
+        public IEnumerable<Band> GetBands(IEnumerable<Guid> bandIds)
         {
-            throw new NotImplementedException();
+            if (bandIds == null)
+                throw new ArgumentNullException(nameof(bandIds));
+            return _context.Bands.Where(b => bandIds.Contains(b.Id))
+                .OrderBy(b=>b.Name).ToList();
         }
 
         public bool Save()
         {
-            throw new NotImplementedException();
+            return (_context.SaveChanges() >= 0);
         }
 
         public void UpdateAlbum(Album album)
         {
-            throw new NotImplementedException();
+           //not implemented
         }
 
         public void UpdateBand(Band band)
         {
-            throw new NotImplementedException();
+            //not implemented
         }
     }
 }
