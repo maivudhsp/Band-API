@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BandAPI.Helps;
 using BandAPI.Models;
 using BandAPI.Service;
@@ -14,28 +15,32 @@ namespace BandAPI.Controllers
     public class BandsController : ControllerBase
     {
         private readonly IBandAlbumRepository _bandAlbumRepository;
-        public BandsController(IBandAlbumRepository bandAlbumRepository)
+        private readonly IMapper _mapper;
+        public BandsController(IBandAlbumRepository bandAlbumRepository, IMapper mapper)
         {
-            _bandAlbumRepository = bandAlbumRepository ?? throw new ArgumentNullException(nameof(bandAlbumRepository));
+            _bandAlbumRepository = bandAlbumRepository ?? 
+                throw new ArgumentNullException(nameof(bandAlbumRepository));
+            _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
         }
 
         [HttpGet]
+        [HttpHead]
         public ActionResult<IEnumerable<BandDto>> GetBands()
         {
             var bandsFromRepo =_bandAlbumRepository.GetBands();
             var bandsDto = new List<BandDto>();
-            foreach(var band in bandsFromRepo)
-            {
-                bandsDto.Add(new BandDto()
-                {
-                    Id = band.Id,
-                    Name = band.Name,
-                    MainGenre = band.MainGenre, 
-                    FoundYearsAgo = $"{band.Founded.ToString()} ({band.Founded.GetYearsAgo()})"
+            // foreach(var band in bandsFromRepo)
+            // {
+            //     bandsDto.Add(new BandDto()
+            //     {
+            //         Id = band.Id,
+            //         Name = band.Name,
+            //         MainGenre = band.MainGenre, 
+            //         FoundYearsAgo = $"{band.Founded.ToString()} ({band.Founded.GetYearsAgo()})"
 
-                });
-            }
-            return Ok(bandsDto);
+            //     });
+            // }
+            return Ok(_mapper.Map<IEnumerable<BandDto>>(bandsFromRepo));
         }
         [HttpGet("{bandId}")]
         public IActionResult GetBand(Guid bandId)

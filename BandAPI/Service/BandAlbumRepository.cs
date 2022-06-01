@@ -77,7 +77,7 @@ namespace BandAPI.Service
         {
             if (bandId == Guid.Empty)
                 throw new ArgumentNullException(nameof(bandId));
-            return _context.Albums.Where(a => a.Id == bandId)
+            return _context.Albums.Where(a => a.BandId == bandId)
                 .OrderBy(a=>a.Title).ToList();
         }
 
