@@ -1,4 +1,5 @@
 ﻿using BandAPI.Entities;
+using BandAPI.Helps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace BandAPI.Service
         IEnumerable<Band> GetBands();
         Band GetBand(Guid bandId);
         IEnumerable<Band> GetBands(IEnumerable<Guid> bandIds);
+        // IEnumerable<Band> GetBands(BandResourceParameters bandResourceParameters);
+        PageList<Band> GetBands(BandResourceParameters bandResourceParameters);
         void Addband(Band band);
         void UpdateBand(Band band);
         void DeleteBand(Band band);

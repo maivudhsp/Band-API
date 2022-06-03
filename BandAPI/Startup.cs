@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Serialization;
 
 namespace BandAPI
 {
@@ -28,6 +29,8 @@ namespace BandAPI
             services.AddControllers(setup => {
 
                 setup.ReturnHttpNotAcceptable = true;
+            }).AddNewtonsoftJson(opt => {
+                opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             }).AddXmlDataContractSerializerFormatters();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IBandAlbumRepository, BandAlbumRepository>();
