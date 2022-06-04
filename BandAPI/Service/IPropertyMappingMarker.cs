@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BandAPI.Helps
+namespace BandAPI.Service
 {
-    public enum UriType
+    public interface IPropertyMappingMarker
     {
-        PreviousPage,
-        NextPage,
+        
     }
 }

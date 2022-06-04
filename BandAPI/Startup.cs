@@ -34,6 +34,7 @@ namespace BandAPI
             }).AddXmlDataContractSerializerFormatters();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IBandAlbumRepository, BandAlbumRepository>();
+            services.AddScoped<IPropertyMappingService, PropertiesMappingService>();
             services.AddDbContext<BandAlbumContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
